@@ -1,42 +1,61 @@
 <template>
   <div class="bg-top">
-    <h3>Nombre</h3>
-    <h3>Promedio</h3>
+    <h3>{{ user.name }}</h3>
   </div>
   <div>
-    <div class="container mb-5">
-      <div class="row size-row">
-        <div class="col-lg-4 mb-4">
+    <div
+      class="container mb-5"
+      v-for="subject in user.subjects"
+      :key="subject._id"
+    >
+      <div class="row hover" @click="goSubject(subject._id)">
+        <div class="col-lg-4">
           <div class="card">
-            <img src="../assets/math.jpg" class="card-img-top" />
+            <img :src="subject.urlImage" class="card-img-top" />
             <div class="card-body">
-              <h5 class="card-title">Calculo II</h5>
+              <h5 class="card-title">{{ subject.name }}</h5>
             </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 mb-4">
-          <div class="card">
-            <img src="../assets/math.jpg" class="card-img-top" />
-            <div class="card-body">
-              <h5 class="card-title">Fisica 2</h5>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 mb-4">
-          <div class="card">
-            <img src="../assets/add.png" class="card-img-top" />
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div>
+    <button type="button" class="btn btn-primary" @click="addSubject()">
+      +
+    </button>
+  </div>
 </template>
 
 <script>
+import { userDetails } from "../services/users.service";
+
 export default {
   name: "HomeView",
+
+  data() {
+    return {
+      user: "",
+      id: "639bd3b42b9b92a0a225fc24",
+    };
+  },
+
+  mounted() {
+    this.getUser();
+  },
+
+  methods: {
+    async getUser() {
+      const response = await userDetails(this.id);
+      this.user = response.data.user;
+    },
+    addSubject() {
+      this.$router.push({ name: "addSubject" });
+    },
+    goSubject(id) {
+      this.$router.push({ name: "subject", params: { id } });
+    },
+  },
 };
 </script>
 
