@@ -10,7 +10,7 @@
           <div class="card">
             <img src="../assets/math.jpg" class="card-img-top" />
             <div class="card-body">
-              <h5 class="card-title">Calculo I</h5>
+              <h5 class="card-title">Calculo II</h5>
             </div>
           </div>
         </div>
